@@ -5,45 +5,45 @@ use App\Models\Course;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 it('show course overview', function () {
-    Course::factory()->create(['title' => 'Course A', 'description' => 'Des A']);
+    $firstCourse = Course::factory()->create();
     Course::factory()->create(['title' => 'Course B', 'description' => 'Des B']);
     Course::factory()->create(['title' => 'Course C', 'description' => 'Des C']);
 
     $this->get(route('home'))->assertStatus(200)
-    ->assertSeeText([
-        'Course A',
-        'Course B',
-        'Des A',
-        'Des B',
-        'Des C',
-    ]);
+        ->assertSeeText([
+            $firstCourse->title,
+            'Course B',
+            $firstCourse->description,
+            'Des B',
+            'Des C',
+        ]);
 });
 
 it('show course released', function () {
-    Course::factory()->create(['title' => 'Course A', 'description' => 'Des A', 'released_at' => now()]);
-    Course::factory()->create(['title' => 'Course B', 'description' => 'Des B', 'released_at' => now()]);
+    Course::factory()->released()->create(['title' => 'Course A', 'description' => 'Des A']);
+    Course::factory()->released()->create(['title' => 'Course B', 'description' => 'Des B']);
     Course::factory()->create(['title' => 'Course C', 'description' => 'Des C']);
 
     $this->get(route('home', ['is_released' => 1]))->assertStatus(200)
-    ->assertSeeText([
-        'Course A',
-        'Course B',
-        'Des A',
-        'Des B',
-    ])
-    ->assertDontSeeText([
-        'Course C',
-        'Des C',
-    ]);
+        ->assertSeeText([
+            'Course A',
+            'Course B',
+            'Des A',
+            'Des B',
+        ])
+        ->assertDontSeeText([
+            'Course C',
+            'Des C',
+        ]);
 });
 
 it('show course by released date', function () {
-    Course::factory()->create(['title' => 'Course A', 'description' => 'Des A', 'released_at' => $yesterday = \Illuminate\Support\Carbon::yesterday()]);
-    Course::factory()->create(['title' => 'Course B', 'description' => 'Des B', 'released_at' => $now = now()]);
+    Course::factory()->released($yesterday = \Illuminate\Support\Carbon::yesterday())->create(['title' => 'Course A', 'description' => 'Des A']);
+    Course::factory()->released()->create(['title' => 'Course B', 'description' => 'Des B', 'released_at' => $now = now()]);
 
     $this->get(route('home'))->assertStatus(200)
-    ->assertSeeTextInOrder([
-        $now->toDateTimeString(),
-        $yesterday->toDateTimeString(),
-    ]);
+        ->assertSeeTextInOrder([
+            $now->toDateTimeString(),
+            $yesterday->toDateTimeString(),
+        ]);
 });

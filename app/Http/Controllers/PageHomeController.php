@@ -12,7 +12,7 @@ class PageHomeController extends Controller
         $query = Course::query();
 
         if ($request->get('is_released')) {
-            $query->whereNotNull('released_at');
+            $query->released();
         }
 
         $courses = $query->latest('released_at')->get();
