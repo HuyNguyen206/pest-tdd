@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->text('description');
-            $table->json('tagline');
-            $table->string('image');
-            $table->text('learning');
-            $table->timestamp('released_at')->nullable()->default(null);
+            $table->foreignIdFor(\App\Models\Course::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('videos');
     }
 };

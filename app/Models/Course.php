@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -12,6 +13,7 @@ class Course extends Model
 
     protected $casts = [
         'released_at' => 'datetime',
+        'learning' => 'array'
     ];
 
     protected static function booted()
@@ -24,5 +26,13 @@ class Course extends Model
     public function scopeReleased(Builder $builder): Builder
     {
         return $builder->whereNotNull('released_at');
+    }
+
+    /**
+     * @return HasMany<Course>
+     */
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
     }
 }

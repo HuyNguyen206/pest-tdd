@@ -20,9 +20,9 @@ it('return released course for scope released', function () {
 
 it('return the detail of the course', function () {
     $course = Course::factory()->create([
-        'tagLine' => $tagLine = 'Course tagline',
+        'tagline' => $tagLine = 'Course tagline',
         'image' => $image = 'image.png',
-        'learnings' => [
+        'learning' => [
             'Learn laravel route',
             'Learn laravel model',
             'Learn laravel controller',
@@ -40,4 +40,22 @@ it('return the detail of the course', function () {
             'Learn laravel controller',
         ])
         ->assertSee($image);
+});
+
+it('show number of video in course', function () {
+    $course = Course::factory()->create();
+    \App\Models\Video::factory(3)->create(['course_id' => $course->id]);
+
+    $this->get(route('courses.show', $course))
+        ->assertOk()
+        ->assertSee('3 videos');
+});
+
+
+test('course has videos', function () {
+    $course = \App\Models\Course::factory()->create();
+
+    \App\Models\Video::factory(4)->create(['course_id' => $course->id]);
+
+    expect($course->videos)->toHaveCount(4)->each->toBeInstanceOf(\App\Models\Video::class);
 });
