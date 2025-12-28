@@ -10,5 +10,5 @@
     @endforeach
 </ul>
 <span>Total videos: {{$course->videos_count}} videos</span>
-<img src="{{$course->image}}" alt="">
+<img src="{{asset($course->image)}}" alt="">
 
