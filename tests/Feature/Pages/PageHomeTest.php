@@ -45,3 +45,19 @@ it('show course by released date', function () {
             $yesterday->toDateTimeString(),
         ]);
 });
+
+it('see login when guest', function () {
+    $this->get(route('home'))
+        ->assertSee('Login')
+        ->assertSee(route('login'));
+});
+
+it('see logout when authenticate', function () {
+    $this->actingAs(userCreate())->get(route('home'))
+        ->assertSee('Logout')
+        ->assertSee(route('logout'));
+});
+
+it('does not find jetstream registration page', function () {
+    $this->get('register')->assertNotFound();
+});

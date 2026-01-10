@@ -67,3 +67,9 @@ it('see videos link', function () {
         ->assertSeeText('Watch videos')
         ->assertSee(route('courses.videos.index', $course));
 });
+
+it('see logout when authenticate', function () {
+    $this->actingAs(userCreate())->get(route('dashboard'))
+        ->assertSee('Log Out')
+        ->assertSee(route('logout'));
+});

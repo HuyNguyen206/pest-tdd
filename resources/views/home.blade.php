@@ -1,3 +1,23 @@
+
+<ul>
+    @auth
+        <li>
+            <form action="{{route('logout')}}" method="post">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
+        </li>
+    @endauth
+    @guest
+            <li>
+                <a href="{{route('login')}}">Login</a>
+            </li>
+            <li>
+                <a href="register">Register</a>
+            </li>
+    @endguest
+
+</ul>
 @foreach($courses as $course)
     <h2>
         {{$course->title}}
