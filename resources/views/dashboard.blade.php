@@ -8,11 +8,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-               <ul>
                    @foreach($purchasedCourses as $purchasedCourse)
-                       <li>{{$purchasedCourse->title}}</li>
+                       <div>
+                           <h3>
+                               {{$purchasedCourse->title}}
+                           </h3>
+                           <a href="{{route('courses.videos.index', $purchasedCourse)}}">Watch videos</a>
+                       </div>
                    @endforeach
-               </ul>
             </div>
         </div>
     </div>

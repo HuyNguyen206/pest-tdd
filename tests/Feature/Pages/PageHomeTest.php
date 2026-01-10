@@ -2,8 +2,6 @@
 
 use App\Models\Course;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 it('show course overview', function () {
     $firstCourse = Course::factory()->create();
     Course::factory()->create(['title' => 'Course B', 'description' => 'Des B']);

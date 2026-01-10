@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +15,7 @@ use Tests\TestCase;
 |
 */
 
-uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(TestCase::class, \Illuminate\Foundation\Testing\LazilyRefreshDatabase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function userCreate(?User $user = null): User
 {
-    // ..
+    $user ??= User::factory()->create();
+
+    return $user;
 }

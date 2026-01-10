@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Http\Controllers\PageHomeController::class)->name('home');
 Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/courses/{course:slug}/videos', [\App\Http\Controllers\CourseVideoController::class, 'index'])
+    ->name('courses.videos.index');
 
 Route::middleware([
     'auth:sanctum',

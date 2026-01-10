@@ -39,6 +39,8 @@ class Course extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'purchased_course')->withTimestamps();
+        return $this->belongsToMany(User::class, 'purchased_course')
+            ->withTimestamps()
+            ;
     }
 }

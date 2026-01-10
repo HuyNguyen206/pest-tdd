@@ -2,8 +2,6 @@
 
 use App\Models\Course;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 it('return released course for scope released', function () {
     $releasedCourse = Course::factory()
         ->released()
