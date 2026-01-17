@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('description');
+            $table->tinyInteger('duration_in_min')->unsigned();
             $table->string('slug');
+            $table->string('vimeo_id');
             $table->foreignIdFor(\App\Models\Course::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

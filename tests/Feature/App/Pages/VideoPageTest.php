@@ -8,7 +8,7 @@ test('guest can not access video page', function () {
 });
 
 test('it include video player', function () {
-    $course = \App\Models\Course::factory()->create();
+    $course = \App\Models\Course::factory()->has(\App\Models\Video::factory())->create();
     $this->actingAs(userCreate())->get(route('courses.videos.index', $course))
         ->assertSeeLivewire(\App\Livewire\VideoPlayer::class);
 });
