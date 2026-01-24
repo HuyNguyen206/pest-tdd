@@ -20,4 +20,9 @@ class Video extends Model
     {
         return $this->duration_in_min . ' min';
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
