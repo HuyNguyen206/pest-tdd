@@ -19,7 +19,7 @@ it('can  see purchased courses', function () {
             ['title' => 'course a'],
             ['title' => 'course b']
         )
-    ))->create();
+    ), 'purchasedCourses')->create();
 
     $this->actingAs($user)->get(route('dashboard'))
         ->assertOk()
@@ -47,8 +47,8 @@ it('show latest purchased courses', function () {
     $course1 = Course::factory()->create();
     $course2 = Course::factory()->create();
 
-    $user->courses()->attach($course2, ['created_at' => \Carbon\Carbon::yesterday()]);
-    $user->courses()->attach($course1, ['created_at' =>  now()]);
+    $user->purchasedCourses()->attach($course2, ['created_at' => \Carbon\Carbon::yesterday()]);
+    $user->purchasedCourses()->attach($course1, ['created_at' =>  now()]);
 
     $this->actingAs($user)->get(route('dashboard'))
         ->assertOk()
@@ -59,7 +59,7 @@ it('show latest purchased courses', function () {
 });
 
 it('see videos link', function () {
-    $user = User::factory()->has(Course::factory())->create();
+    $user = User::factory()->has(Course::factory(), 'purchasedCourses')->create();
     $course = Course::first();
 
     $this->actingAs($user)->get(route('dashboard'))

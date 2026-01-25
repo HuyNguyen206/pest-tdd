@@ -45,7 +45,7 @@ it('mark video as completed', function () {
     $video = \App\Models\Video::factory()->create();
 
     \Pest\Laravel\actingAs($user = userCreate());
-    $user->courses()->attach($video->course);
+    $user->purchasedCourses()->attach($video->course);
     expect($user->videosCompleted)->toHaveCount(0);
 
     Livewire::test(\App\Livewire\VideoPlayer::class, ['video' => $video])
@@ -60,7 +60,7 @@ it('mark video as not completed', function () {
     $video = \App\Models\Video::factory()->create();
 
     \Pest\Laravel\actingAs($user = userCreate());
-    $user->courses()->attach($video->course);
+    $user->purchasedCourses()->attach($video->course);
 
     $user->videosCompleted()->attach($video->id);
 

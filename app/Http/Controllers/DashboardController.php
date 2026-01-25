@@ -6,7 +6,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $purchasedCourses = auth()->user()->courses()
+        $purchasedCourses = auth()->user()->purchasedCourses()
             ->with('videos')->latest('purchased_course.created_at')->get();
 
         return view('dashboard', compact('purchasedCourses'));
