@@ -39,3 +39,37 @@ test('show a list of course video', function () {
         route('courses.videos.index', [$course, $course->videos()->oldest('videos.id')->get()->get(2)])
     ]);
 });
+
+it('mark video as completed', function () {
+
+    $video = \App\Models\Video::factory()->create();
+
+    \Pest\Laravel\actingAs($user = userCreate());
+    $user->courses()->attach($video->course);
+    expect($user->videosCompleted)->toHaveCount(0);
+
+    Livewire::test(\App\Livewire\VideoPlayer::class, ['video' => $video])
+        ->call('toggleWatchedVideo', [$video->id]);
+
+    expect($user->refresh()->videosCompleted)->toHaveCount(1);
+    expect($user->videosCompleted()->where('videos.id', $video->id)->exists())->toBe(true);
+});
+
+it('mark video as not completed', function () {
+
+    $video = \App\Models\Video::factory()->create();
+
+    \Pest\Laravel\actingAs($user = userCreate());
+    $user->courses()->attach($video->course);
+
+    $user->videosCompleted()->attach($video->id);
+
+    expect($user->videosCompleted)->toHaveCount(1);
+
+
+    Livewire::test(\App\Livewire\VideoPlayer::class, ['video' => $video])
+        ->call('toggleWatchedVideo', [$video->id]);
+
+    expect($user->refresh()->videosCompleted)->toHaveCount(0);
+    expect($user->videosCompleted()->where('videos.id', $video->id)->exists())->toBe(false);
+});

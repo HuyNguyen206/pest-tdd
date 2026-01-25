@@ -20,4 +20,9 @@ class VideoPlayer extends Component
     {
         return view('livewire.video-player');
     }
+
+    public function toggleWatchedVideo($videoId)
+    {
+        \Auth::user()->videosCompleted()->toggle($videoId);
+    }
 }

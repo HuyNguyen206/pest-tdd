@@ -25,4 +25,9 @@ class Video extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function usersCompleted()
+    {
+        return $this->belongsToMany(User::class, 'watched_videos')->withTimestamps();
+    }
 }

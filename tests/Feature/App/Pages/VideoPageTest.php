@@ -13,7 +13,7 @@ test('it include video player', function () {
         ->assertSeeLivewire(\App\Livewire\VideoPlayer::class);
 });
 
-test('show first video of course', function () {
+test('show detail first video of course', function () {
     $course = \App\Models\Course::factory()->create();
     $firstVideo = \App\Models\Video::factory()->create([
         'course_id' => $course->id
@@ -27,7 +27,7 @@ test('show first video of course', function () {
         ->assertSeeText([
             $firstVideo->title,
         ])
-        ->assertDontSeeText($secondVideo->title);
+        ->assertDontSeeText($secondVideo->description);
 });
 
 test('show specific video in course', function () {
@@ -42,5 +42,5 @@ test('show specific video in course', function () {
 
     $this->actingAs(userCreate())->get(route('courses.videos.index',[$course, $secondVideo]))
         ->assertSeeText($secondVideo->title)
-        ->assertDontSeeText($firstVideo->title);
+        ->assertDontSeeText($firstVideo->description);
 });

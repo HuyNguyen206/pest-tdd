@@ -68,4 +68,9 @@ class User extends Authenticatable
 //            ->orderByPivot('created_at', 'desc')
             ;
     }
+
+    public function videosCompleted()
+    {
+        return $this->belongsToMany(Video::class, 'watched_videos')->withTimestamps();
+    }
 }
