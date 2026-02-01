@@ -30,4 +30,9 @@ class Video extends Model
     {
         return $this->belongsToMany(User::class, 'watched_videos')->withTimestamps();
     }
+
+    public function isMarkAsCompleted()
+    {
+
+    }
 }

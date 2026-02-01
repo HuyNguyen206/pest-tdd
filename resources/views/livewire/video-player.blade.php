@@ -10,6 +10,14 @@
         {{$video->getReadableDuration()}}
     </span>
         <iframe src='https://player.vimeo.com/video/{{$video->vimeo_id}}' allowfullscreen></iframe>
+   <a href="#" wire:click.prevent="toggleWatchedVideo">
+       @if(auth()->user()->isWatchedVideo($video))
+           Mark as uncompleted
+       @else
+           Mark as completed
+       @endif
+
+   </a>
     @endif
 
     @if($remainVideos)

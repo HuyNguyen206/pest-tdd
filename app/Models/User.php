@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Video::class, 'watched_videos')->withTimestamps();
     }
+
+    public function isWatchedVideo(Video $video): bool
+    {
+        return $this->videosCompleted()->where('videos.id', $video->id)->exists();
+    }
 }
