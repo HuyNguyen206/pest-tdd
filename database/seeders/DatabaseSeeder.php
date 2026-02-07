@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(CreateCourseSeeder::class);
+        $this->call(CreateVideoSeeder::class);
+        $env = \App::environment();
+
+        if (in_array($env, ['local', 'testing'])) {
+            $this->call(CreateUserSeeder::class);
+        }
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
