@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CreateCourseSeeder::class);
         $this->call(CreateVideoSeeder::class);
+        $this->call(CreatePurchaseCourseSeeder::class);
         $env = \App::environment();
 
         if (in_array($env, ['local', 'testing'])) {

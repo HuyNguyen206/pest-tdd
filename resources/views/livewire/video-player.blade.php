@@ -1,8 +1,8 @@
-<div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     @if($video)
-        <b>
+        <h3>
             {{$video->title}}
-        </b>
+        </h3>
         <p>
             {{$video->description}}
         </p>
@@ -10,19 +10,29 @@
         {{$video->getReadableDuration()}}
     </span>
         <iframe src='https://player.vimeo.com/video/{{$video->vimeo_id}}' allowfullscreen></iframe>
-   <a href="#" wire:click.prevent="toggleWatchedVideo">
-       @if(auth()->user()->isWatchedVideo($video))
-           Mark as uncompleted
-       @else
-           Mark as completed
-       @endif
+    <div>
+        <button class="p-2 y-4 border-2 border-cyan-800 bg-transparent" wire:click.prevent="toggleWatchedVideo({{$video->id}})">
+            @if(auth()->user()->isWatchedVideo($video))
+                Mark as uncompleted
+            @else
+                Mark as completed
+            @endif
 
-   </a>
-    @endif
+        </button>
+    </div>
 
-    @if($remainVideos)
-        @foreach($remainVideos as $remainVideo)
-                <a href="{{route('courses.videos.index', [$video->course, $remainVideo])}}"> {{$remainVideo->title}}</a>
-        @endforeach
     @endif
+    <div>
+        @if($remainVideos)
+            <ul>
+                @foreach($remainVideos as $remainVideo)
+                    <li>
+                        <a href="{{route('courses.videos.index', [$video->course, $remainVideo])}}"> {{$remainVideo->title}}</a>
+                    </li>
+                @endforeach
+            </ul>
+
+        @endif
+    </div>
+
 </div>

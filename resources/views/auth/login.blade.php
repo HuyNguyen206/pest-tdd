@@ -11,7 +11,10 @@
                 {{ session('status') }}
             </div>
         @endif
-
+        @env('local')
+            <x-login-link email="nguyenlehuyuit@gmail.com" label="Login as test user"
+            :redirect-url="route('dashboard')"/>
+        @endenv
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
