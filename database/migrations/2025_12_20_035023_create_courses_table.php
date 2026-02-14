@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image');
             $table->text('learning');
             $table->timestamp('released_at')->nullable()->default(null);
+            $table->string('paddle_product_id')->nullable()->default(null);
             $table->timestamps();
         });
     }

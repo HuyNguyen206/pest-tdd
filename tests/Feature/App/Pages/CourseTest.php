@@ -60,3 +60,17 @@ test('course has videos', function () {
 test('does not find unrelease course', function () {
     $this->get(route('courses.show', $course = Course::factory()->create()))->assertNotFound();
 });
+
+it('show checkout button', function () {
+//    \Pest\Laravel\withoutExceptionHandling();
+    config()->set('services.paddle.client_key', 1234);
+    $course = Course::factory()->released()->create([
+        'paddle_product_id' => 'product-id'
+    ]);
+
+    $this->get(route('courses.show', $course))
+        ->assertOk()
+        ->assertSee('<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>', false)
+        ->assertSee('token: "1234"', false);
+//        ->assertSee("Paddle.Initialize(", false);
+});

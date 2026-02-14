@@ -22,6 +22,7 @@
             {{ $slot }}
         </div>
 
+        @yield('scripts')
         @livewireScripts
     </body>
 </html>
