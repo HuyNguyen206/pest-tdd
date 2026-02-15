@@ -24,6 +24,7 @@ class CreateCourseSeeder extends Seeder
                 'released_at' => '2024-01-15 10:00:00',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'paddle_price_id' => 'pri_01khfn4pv45sbmtysn3rpmdzk3'
             ],
             [
                 'title' => 'Advanced Laravel Development',
@@ -39,6 +40,7 @@ class CreateCourseSeeder extends Seeder
                 'released_at' => '2024-03-10 09:30:00',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'paddle_price_id' => 'pri_01khfmtrfdr09waw2qxbhq5nf8'
             ],
             [
                 'title' => 'REST API Development with Laravel',
@@ -54,6 +56,7 @@ class CreateCourseSeeder extends Seeder
                 'released_at' => '2024-05-01 14:00:00',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'paddle_price_id' => 'pri_01khfnhky4jmvqb2df4sjmpybh'
             ],
             ];
 

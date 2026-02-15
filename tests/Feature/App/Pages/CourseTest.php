@@ -65,12 +65,16 @@ it('show checkout button', function () {
 //    \Pest\Laravel\withoutExceptionHandling();
     config()->set('services.paddle.client_key', 1234);
     $course = Course::factory()->released()->create([
-        'paddle_product_id' => 'product-id'
+        'paddle_price_id' => 'price-id'
     ]);
+    $paddlePriceId = $course->paddle_price_id;
 
     $this->get(route('courses.show', $course))
         ->assertOk()
         ->assertSee('<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>', false)
-        ->assertSee('token: "1234"', false);
-//        ->assertSee("Paddle.Initialize(", false);
+        ->assertSee('token: "1234"', false)
+        ->assertSee('class="paddle_button', false)
+        ->assertSee(<<<HTML
+                         "priceId": "$course->paddle_price_id"
+                        HTML, false);
 });

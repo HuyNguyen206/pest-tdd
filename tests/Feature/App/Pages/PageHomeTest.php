@@ -61,3 +61,11 @@ it('see logout when authenticate', function () {
 it('does not find jetstream registration page', function () {
     $this->get('register')->assertNotFound();
 });
+
+it('include course links', function () {
+    $course = Course::factory()->create();
+    $secondCourse = Course::factory()->create();
+
+    \Pest\Laravel\get(route('home'))->assertSee(route('courses.show', $course), false);
+    \Pest\Laravel\get(route('home'))->assertSee(route('courses.show', $secondCourse), false);
+});

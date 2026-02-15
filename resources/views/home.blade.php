@@ -20,7 +20,9 @@
 </ul>
 @foreach($courses as $course)
     <h2>
-        {{$course->title}}
+        <a href="{{route('courses.show', $course)}}">
+            {{$course->title}}
+        </a>
     </h2>
     <p>
         {{$course->description}} @if($course->released_at) - <span>at {{$course->released_at->toDateTimeString()}}</span> @endif
