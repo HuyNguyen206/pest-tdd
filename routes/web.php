@@ -27,3 +27,5 @@ Route::middleware([
     Route::get('/courses/{course:slug}/videos/{video:slug?}', [\App\Http\Controllers\CourseVideoController::class, 'index'])
         ->name('courses.videos.index');
 });
+
+Route::webhooks('webhooks');
