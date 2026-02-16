@@ -57,3 +57,59 @@ test('does not store invalid paddle purchased request', function () {
 
     \Pest\Laravel\assertDatabaseCount(\Spatie\WebhookClient\Models\WebhookCall::class, 0);
 });
+
+test('dispatch a paddlehande job when request is valid', function () {
+    Queue::fake();
+    $paddleSignatureValidator = Mockery::mock(\App\Service\Paddle\PaddleSignatureValidator::class)->makePartial();
+    $paddleSignatureValidator->expects('isValid')->andReturn(true);
+    app()->instance(\App\Service\Paddle\PaddleSignatureValidator::class, $paddleSignatureValidator);
+
+    \Pest\Laravel\post('webhooks', [
+        'id' => 'txn_01hv8wptq8987qeep44cyrewp9',
+        'items' => [
+            [
+                'price' => [
+                    'id' => 'pri_01gsz8x8sawmvhz1pv30nge1ke',
+                    'name' => 'Monthly (per seat)',
+                    'type' => 'standard',
+                    'status' => 'active',
+                    'quantity' => [
+                        'maximum' => 999,
+                        'minimum' => 1,
+                    ],
+                    'tax_mode' => 'account_setting',
+                    'created_at' => '2023-02-23T13:55:22.538367Z',
+                    'product_id' => 'pro_01gsz4t5hdjse780zja8vvr7jg',
+                    'unit_price' => [
+                        'amount' => '3000',
+                        'currency_code' => 'USD',
+                    ],
+                    'updated_at' => '2024-04-11T13:54:52.254748Z',
+                    'custom_data' => null,
+                    'description' => 'Monthly',
+                    'import_meta' => null,
+                    'trial_period' => null,
+                    'billing_cycle' => [
+                        'interval' => 'month',
+                        'frequency' => 1,
+                    ],
+                    'unit_price_overrides' => [],
+                ],
+                'quantity' => 10,
+                'proration' => null,
+            ],
+        ]]);
+
+    Queue::assertPushed(\App\Jobs\HandlePaddlePurchasedJob::class);
+});
+
+test('does not dispatch a paddlehande job when request is invalid', function () {
+    Queue::fake();
+    $paddleSignatureValidator = Mockery::mock(\App\Service\Paddle\PaddleSignatureValidator::class)->makePartial();
+    $paddleSignatureValidator->expects('isValid')->andReturn(false);
+    app()->instance(\App\Service\Paddle\PaddleSignatureValidator::class, $paddleSignatureValidator);
+
+    \Pest\Laravel\post('webhooks', []);
+
+    Queue::assertNotPushed(\App\Jobs\HandlePaddlePurchasedJob::class);
+});

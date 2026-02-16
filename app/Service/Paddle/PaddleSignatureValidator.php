@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Service\Paddle;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Http\Request;
