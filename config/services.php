@@ -32,7 +32,8 @@ return [
     ],
 
     'paddle' => [
-        'client_key' => env('PADDLE_CLIENT_KEY')
+        'client_key' => env('PADDLE_CLIENT_KEY'),
+        'webhook_secret_key' => env('PADDLE_WEBHOOK_SECRET_KEY'),
     ]
 
 ];
