@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Course;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,7 +17,7 @@ class SendPurchasedCourseMail extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public Course $course)
     {
         //
     }
@@ -37,7 +38,7 @@ class SendPurchasedCourseMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'mail.send-purchased-course-mail',
         );
     }
 

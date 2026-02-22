@@ -14,6 +14,11 @@ class PaddleSignatureValidator implements SignatureValidator
 
     public function isValid(Request $request, WebhookConfig $config): bool
     {
+        \Log::info('request', [
+            'headers' => $request->headers->all(),
+            'data' => $request->all(),
+        ]);
+
         $psrRequest = new ServerRequest(
             $request->method(),
             $request->fullUrl(),
@@ -21,9 +26,13 @@ class PaddleSignatureValidator implements SignatureValidator
             $request->getContent()
         );
 
-        return (new Verifier())->verify(
+        $isValid = (new Verifier())->verify(
             $psrRequest,
             new Secret(config('services.paddle.webhook_secret_key'))
         );
+
+        \Log::info($isValid);
+
+        return $isValid;
     }
 }
