@@ -2,9 +2,10 @@
 
 namespace Tests\Fake;
 
+use App\Http\Client\TwitterInterface;
 use PHPUnit\Framework\Assert;
 
-class TwitterFake
+class TwitterFake implements TwitterInterface
 {
 
     private array $tweets = [];

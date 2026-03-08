@@ -4,7 +4,7 @@ namespace App\Http\Client;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-class TwitterClient
+class TwitterClient implements TwitterInterface
 {
     public function __construct(public TwitterOAuth $twitterOAuth)
     {
@@ -12,8 +12,6 @@ class TwitterClient
 
     public function tweet($status)
     {
-       $data=  $this->twitterOAuth->post('tweets', compact('status'));
-
-       dd($data);
+       $this->twitterOAuth->post('tweets', compact('status'));
     }
 }

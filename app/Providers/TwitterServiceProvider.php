@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Http\Client\NullTwitter;
+use App\Http\Client\TwitterClient;
+use App\Http\Client\TwitterInterface;
 use Illuminate\Support\ServiceProvider;
 
 class TwitterServiceProvider extends ServiceProvider
@@ -16,6 +19,14 @@ class TwitterServiceProvider extends ServiceProvider
                 config('services.twitter.twitter_access_token'),
                 config('services.twitter.twitter_access_token_secret'),
             );
+        });
+
+        $this->app->bind(TwitterInterface::class, function () {
+            if ($this->app->environment('production')) {
+                return app(TwitterClient::class);
+            }
+
+            return new NullTwitter();
         });
     }
 
