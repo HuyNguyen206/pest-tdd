@@ -2,10 +2,10 @@
 
 namespace App\Http\Client;
 
-class NullTwitter implements TwitterInterface
+class NullTwitterClient implements TwitterInterface
 {
     public function tweet(string $status)
     {
-        // TODO: Implement tweet() method.
+
     }
 }
