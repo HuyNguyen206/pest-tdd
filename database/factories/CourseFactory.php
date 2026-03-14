@@ -26,7 +26,7 @@ class CourseFactory extends Factory
                 fake()->word,
                 fake()->word,
             ],
-            'image' => fake()->image,
+            'image' => fake()->imageUrl,
             'slug' => Str::slug($title),
             'description' => fake()->word
         ];

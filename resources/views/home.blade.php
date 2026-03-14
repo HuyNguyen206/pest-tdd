@@ -1,4 +1,11 @@
 <x-guest-layout :page-name="$pageName">
+    @push('social-tags')
+        <meta property="og:title" content="{{ $pageName }}">
+        <meta property="og:description" content="Laracast is leading online learning plarform">
+        <meta property="og:image" content="{{asset('images/black.jpeg')}}">
+        <meta property="og:url" content="{{route('home')}}">
+        <meta property="og:type" content="website">
+    @endpush
 <ul>
     @auth
         <li>

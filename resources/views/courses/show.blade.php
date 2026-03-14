@@ -1,4 +1,11 @@
-<x-guest-layout>
+<x-guest-layout :page-name="$course->title">
+    @push('social-tags')
+        <meta property="og:title" content="{{ $course->title }}">
+        <meta property="og:description" content="{{ $course->description }}">
+        <meta property="og:image" content="{{$course->image}}">
+        <meta property="og:url" content="{{route('courses.show', $course)}}">
+        <meta property="og:type" content="website">
+    @endpush
     <h2>
         {{$course->title}}
     </h2>
