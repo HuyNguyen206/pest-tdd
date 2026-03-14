@@ -1,4 +1,4 @@
-
+<x-guest-layout :page-name="$pageName">
 <ul>
     @auth
         <li>
@@ -18,9 +18,10 @@
     @endguest
 
 </ul>
+    <hr>
 @foreach($courses as $course)
     <h2>
-        <a href="{{route('courses.show', $course)}}">
+        <a  class="font-bold underline" href="{{route('courses.show', $course)}}">
             {{$course->title}}
         </a>
     </h2>
@@ -28,3 +29,4 @@
         {{$course->description}} @if($course->released_at) - <span>at {{$course->released_at->toDateTimeString()}}</span> @endif
     </p>
 @endforeach
+</x-guest-layout>

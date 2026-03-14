@@ -16,7 +16,8 @@ class PageHomeController extends Controller
         }
 
         $courses = $query->latest('released_at')->get();
+        $pageName = config('app.name', 'Laravel') . ' - Home';
 
-        return view('home', compact('courses'));
+        return view('home', compact('courses', 'pageName'));
     }
 }
