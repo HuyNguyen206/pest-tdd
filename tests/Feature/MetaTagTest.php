@@ -1,11 +1,15 @@
 <?php
 
 
+use Juampi92\TestSEO\TestSEO;
+
 test('include title in home page', function () {
     $expectedTitle = config('app.name') . ' - Home';
 
-    $this->get(route('home'))->assertStatus(200)
-        ->assertSee("<title>$expectedTitle</title>", false);
+    $response = $this->get(route('home'))->assertStatus(200);
+
+    $seo = new TestSEO($response->getContent());
+    expect($seo->data)->title()->toBe($expectedTitle);
 });
 
 test('include some meta tags  in home page', function () {
@@ -15,32 +19,37 @@ test('include some meta tags  in home page', function () {
     $expectedTitle = config('app.name') . ' - Home';
 
 
-    $this->get(route('home'))->assertStatus(200)
-        ->assertSee([
-            '<meta property="og:title" content="'. $expectedTitle . '">',
-            '<meta property="og:description" content="Laracast is leading online learning plarform">',
-            '<meta property="og:image" content="' . $imageUrl . '">',
-            '<meta property="og:url" content="' . $pageHome . '">',
-            '<meta property="og:type" content="website">'
-        ], false);
+    $response = $this->get(route('home'))->assertStatus(200);
+
+    $seo = new TestSEO($response->getContent());
+
+    expect($seo->data)->openGraph()->title()->toBe($expectedTitle)
+        ->openGraph()->description()->toBe('Laracast is leading online learning plarform')
+        ->openGraph()->image()->toBe($imageUrl)
+        ->openGraph()->url()->toBe($pageHome)
+        ->openGraph()->type()->toBe('website');
 });
 
 test('include title in course detail page', function () {
     $course = \App\Models\Course::factory()->released()->create();
 
-    $this->get(route('courses.show', $course))->assertStatus(200)
-        ->assertSee("<title>{$course->title}</title>", false);
+    $response = $this->get(route('courses.show', $course))->assertStatus(200);
+
+    $seo = new TestSEO($response->getContent());
+    expect($seo->data)->title()->toBe($course->title);
 });
 
 test('include some meta tags  in course detail page', function () {
     $course = \App\Models\Course::factory()->released()->create();
 
-    $this->get(route('courses.show', $course))->assertStatus(200)
-        ->assertSee([
-            '<meta property="og:title" content="'. $course->title . '">',
-            '<meta property="og:description" content="' . $course->description . '">',
-            '<meta property="og:image" content="' . $course->image . '">',
-            '<meta property="og:url" content="' . route('courses.show', $course) . '">',
-            '<meta property="og:type" content="website">'
-        ], false);
+    $response = $this->get(route('courses.show', $course))->assertStatus(200);
+
+    $seo = new TestSEO($response->getContent());
+
+    expect($seo->data)->openGraph()->title()->toBe($course->title)
+        ->openGraph()->description()->toBe($course->description)
+        ->openGraph()->image()->toBe($course->image)
+        ->openGraph()->url()->toBe( route('courses.show', $course) )
+        ->openGraph()->type()->toBe('website');
 });
+
